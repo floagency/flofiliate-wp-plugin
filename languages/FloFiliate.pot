@@ -1,0 +1,23 @@
+# Copyright (C) 2013 AlexanderC <self@alexanderc.me>
+# This file is distributed under the same license as the FloFiliate package.
+"Project-Id-Version: FloFiliate 0.0.1b\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/FloFiliate\n"
+"POT-Creation-Date: 2013-05-10 11:23:19+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2013-05-10 10:37-0500\n"
+"Last-Translator: AlexanderC <self@alexanderc.me>\n"
+"Language-Team: AlexanderC <self@alexanderc.me>\n"
+"X-Generator: Poedit 1.5.5\n"
+"X-Poedit-KeywordsList: __;_e;_n;_x;esc_html_e;esc_html__;esc_attr_e;"
+"esc_attr__;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;_x:1,2c;_n:1,2\n"
+"X-Poedit-Basepath: ../\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Poedit-SearchPath-0: .\n"
+
+msgid "FloFiliate.settings.title"
+msgstr "FloFiliate Settings"
+
+msgid "FloFiliate.settings.menu"
+msgstr "FloFiliate Settings"
