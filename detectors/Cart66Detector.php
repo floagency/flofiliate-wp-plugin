@@ -69,7 +69,7 @@ class FloFiliate_Cart66Detector extends FloFiliate_IDetector
         
         //Cart66::loadCoreModels(); // load cart66 core models
 
-        setcookie("flo_affiliate_code", $code, time()+(3600*24*30), SITECOOKIEPATH  );  /* expire in 30 days */
+        setcookie("flo_affiliate_code", $trackId, time()+(3600*24*30), SITECOOKIEPATH  );  /* expire in 30 days */
         
         // automatically aplly the coupon
         //Cart66Session::get('Cart66Cart')->applyPromotion(strtoupper($code), true);
@@ -97,11 +97,14 @@ class FloFiliate_Cart66Detector extends FloFiliate_IDetector
             
 
             // get the affiliate code from the cookies
-            if ( false !== ( $stored_flo_aff_code = get_transient( 'flo_affiliate_code_'.$order->id ) ) ) {
-                     // this code runs when there is a valid transient set
-                $promo_code = array($stored_flo_aff_code); 
-            
-                $this->manager->pushCodes($promo_code); 
+            if ( false !== ( $trackId = get_transient( 'flo_affiliate_code_'.$order->id ) ) ) {
+            $ex = "";
+                try {
+                            $this->manager->getApi()->push($trackId);
+                } catch(\Exception $e) {
+                        $ex = $e->getMessage();
+                }
+                
                 //unset($_COOKIE['flo_affiliate_code']);   // should we ?
             }
         }
