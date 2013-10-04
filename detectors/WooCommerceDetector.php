@@ -27,10 +27,10 @@ class FloFiliate_WooCommerceDetector extends FloFiliate_IDetector
      */
     public function register()
     {
-        add_action('woocommerce_payment_complete', array($this, 'apply'));
+        //add_action('woocommerce_payment_complete', array($this, 'apply'));
 
         if(is_admin()) {
-            add_action('woocommerce_order_status_completed', array($this, 'apply'));
+            //add_action('woocommerce_order_status_completed', array($this, 'apply'));
         }
     }
 
@@ -47,7 +47,7 @@ class FloFiliate_WooCommerceDetector extends FloFiliate_IDetector
      */
     public function __toString()
     {
-        return "WooCommerce version {$this->shop->version}";
+        return "WooCommerce version {$this->shop->version} (not working)";
     }
 
     /**
@@ -58,7 +58,7 @@ class FloFiliate_WooCommerceDetector extends FloFiliate_IDetector
     public function dispatch($code, $trackId)
     {
         // if affiliate code is detected in the URL then we create a cookie with that value
-        setcookie("flo_affiliate_code", $code, time()+(3600*24*30), SITECOOKIEPATH  );  // expire in 30 days 
+        //setcookie("flo_affiliate_code", $code, time()+(3600*24*30), SITECOOKIEPATH  );  // expire in 30 days 
     }
 
     /** Other methods */

@@ -18,7 +18,7 @@ class FloFiliate_EShopDetector extends FloFiliate_IDetector
     {
         if(is_admin()) {
             // still need to check if this works
-            add_action('eshop_order_status_updated', array($this, 'apply'));
+            //add_action('eshop_order_status_updated', array($this, 'apply'));
         }
     }
 
@@ -38,7 +38,7 @@ class FloFiliate_EShopDetector extends FloFiliate_IDetector
     public function dispatch($code, $trackId)
     {
         // if affiliate code is detected in the URL then we create a cookie with that value
-        setcookie("flo_affiliate_code", $code, time()+(3600*24*30), SITECOOKIEPATH  );  // expire in 30 days 
+        //setcookie("flo_affiliate_code", $code, time()+(3600*24*30), SITECOOKIEPATH  );  // expire in 30 days 
     }
 
     /**
