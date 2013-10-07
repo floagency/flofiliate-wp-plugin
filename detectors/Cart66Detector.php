@@ -29,6 +29,11 @@ class FloFiliate_Cart66Detector extends FloFiliate_IDetector
             set_transient( 'flo_affiliate_code_'.$orderInfo['id'], $_COOKIE['flo_affiliate_code'], 60*60 ); // save it for 1 hour
 
         }
+        if(isset($_SESSION['flo_user_ip'])){
+            // save user IP in the transient to make it available after we come back from the gateway
+            set_transient( 'flo_affiliate_user_ip'.$orderInfo['id'], $_SESSION['flo_user_ip'], 60*60 ); // save it for 1 hour            
+        }
+        
     }
 
     /**
@@ -100,6 +105,13 @@ class FloFiliate_Cart66Detector extends FloFiliate_IDetector
             if ( false !== ( $trackId = get_transient( 'flo_affiliate_code_'.$order->id ) ) ) {
             $ex = "";
                 try {
+
+                        // check if the User IP is available in the transient
+                        if ( false !== ( $flo_affiliate_user_ip = get_transient( 'flo_affiliate_user_ip'.$order->id ) ) ) {
+                            $this->manager->getApi()->getFingerprint()->regenerateUsingIp($flo_affiliate_user_ip);
+
+                        }
+                        
                             $this->manager->getApi()->push($trackId);
                 } catch(\Exception $e) {
                         $ex = $e->getMessage();

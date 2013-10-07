@@ -140,6 +140,8 @@ class Fingerprint
             $ip = '127.0.0.1';
         }
 
+        $_SESSION['flo_user_ip'] = $ip;
+        
         // we are not using ip2long due to ip.v6
         $long = '';
         $length = strlen($ip);
