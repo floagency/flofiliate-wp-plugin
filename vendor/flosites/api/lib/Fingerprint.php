@@ -39,6 +39,29 @@ class Fingerprint
     }
 
     /**
+     * @param string $ip
+     * @throws \InvalidArgumentException
+     */
+    public function regenerateUsingIp($ip)
+    {
+        if(!filter_var($ip, FILTER_VALIDATE_IP)) {
+            throw new \InvalidArgumentException("An valid ip should be provided");
+        }
+
+        $tmpIp = isset($_SERVER['HTTP_CLIENT_IP']) ? $_SERVER['HTTP_CLIENT_IP'] : null;
+        $_SERVER['HTTP_CLIENT_IP'] = $ip;
+
+        $this->dumpBrowserCapabilities();
+        $this->dumpFingerprint();
+
+        $_SERVER['HTTP_CLIENT_IP'] = $tmpIp;
+
+        if(empty($_SERVER['HTTP_CLIENT_IP'])) {
+            unset($_SERVER['HTTP_CLIENT_IP']);
+        }
+    }
+
+    /**
      * @return void
      */
     protected function dumpFingerprint()

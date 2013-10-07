@@ -154,4 +154,12 @@ class Api implements Version1Definition
     {
         return preg_match(self::TRACK_ID_REGEX, $trackId);
     }
+
+    /**
+     * @return Fingerprint
+     */
+    public function getFingerprint()
+    {
+        return $this->fingerprint;
+    }
 }
