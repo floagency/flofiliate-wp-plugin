@@ -85,14 +85,14 @@ class Fingerprint
             $fingerprint .= ".";
         }
 
-        $longIp = $this->getIpLong();
+        list($longIp, $ipInfo) = $this->getIpLong();
 
         // we store persistent browser uid
         $this->fingerprint = $fingerprint .
             sprintf(
                 "%s.%s",
-                substr($longIp, 0, -3),
-                substr($longIp, -3)
+                $longIp,
+                implode('', $ipInfo)
             );
     }
 
@@ -101,17 +101,17 @@ class Fingerprint
      */
     protected function getIpLong()
     {
-        if ($_SERVER['HTTP_CLIENT_IP']) {
+        if (isset($_SERVER['HTTP_CLIENT_IP'])) {
             $ip = $_SERVER['HTTP_CLIENT_IP'];
-        } else if ($_SERVER['HTTP_X_FORWARDED_FOR']) {
+        } else if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
             $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
-        } else if ($_SERVER['HTTP_X_FORWARDED']) {
+        } else if (isset($_SERVER['HTTP_X_FORWARDED'])) {
             $ip = $_SERVER['HTTP_X_FORWARDED'];
-        } else if ($_SERVER['HTTP_FORWARDED_FOR']) {
+        } else if (isset($_SERVER['HTTP_FORWARDED_FOR'])) {
             $ip = $_SERVER['HTTP_FORWARDED_FOR'];
-        } else if ($_SERVER['HTTP_FORWARDED']) {
+        } else if (isset($_SERVER['HTTP_FORWARDED'])) {
             $ip = $_SERVER['HTTP_FORWARDED'];
-        } else if ($_SERVER['REMOTE_ADDR']) {
+        } else if (isset($_SERVER['REMOTE_ADDR'])) {
             $ip = $_SERVER['REMOTE_ADDR'];
         } else {
             $ip = '127.0.0.1';
@@ -120,12 +120,15 @@ class Fingerprint
         // we are not using ip2long due to ip.v6
         $long = '';
         $length = strlen($ip);
+        $info = array();
 
         for ($i = 0; $i < $length; $i++) {
-            $long .= ord($ip{$i});
+            $str = (string) ord($ip{$i});
+            $info[] = strlen($str);
+            $long .= $str;
         }
 
-        return $long;
+        return array($long, $info);
     }
 
     /**
