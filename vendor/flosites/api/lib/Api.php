@@ -62,11 +62,34 @@ class Api implements Version1Definition
     }
 
     /**
+     * @param string $sKey
+     * @param string $id
+     * @return array
+     */
+    public function delete($sKey, $id)
+    {
+        $delimiter = false === strpos($this->apiUrl, "?") ? "?" : "&";
+
+        $url = sprintf(
+            "{$this->apiUrl}%s{$delimiter}" .
+            self::ID_KEY . "=%s&" .
+            self::SKEY_KEY . "=%s&",
+            self::DELETE_PART,
+            $id,
+            $sKey
+        );
+
+        return $this->decoder->decode($this->network->get($url));
+    }
+
+    /**
      * @param string $trackId
+     * @param bool $callbackUrl
+     * @param array $additionalData
      * @return array
      * @throws \BadMethodCallException
      */
-    public function push($trackId)
+    public function push($trackId, $callbackUrl = false, array $additionalData = null)
     {
         if (!self::validateTrackId($trackId)) {
             throw new \BadMethodCallException("Invalid Track Id provided");
@@ -74,15 +97,28 @@ class Api implements Version1Definition
 
         $delimiter = false === strpos($this->apiUrl, "?") ? "?" : "&";
 
+        $append = "";
+        if(filter_var($callbackUrl, FILTER_VALIDATE_URL)) {
+            $append .= sprintf("&%s=%s", self::CU_KEY, urlencode($callbackUrl));
+        }
+
+        if($additionalData) {
+            foreach($additionalData as $k => $v) {
+                $append .= "&{$k}=" . urlencode($v);
+            }
+        }
+
         $url = sprintf(
             "{$this->apiUrl}%s{$delimiter}" .
             self::UID_KEY . "=%s&" .
-            self::TRACK_ID_KEY . "=%s&" .
+            self::TRACK_ID_KEY . "=%s" .
+            "%s&" .
             self::ADD_FLAGS,
 
             self::PUSH_PART,
             $this->fingerprint,
-            $trackId
+            $trackId,
+            $append
         );
 
         return $this->decoder->decode($this->network->get($url));
