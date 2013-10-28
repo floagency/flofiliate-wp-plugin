@@ -10,7 +10,7 @@ require __DIR__ . "/autoload.php";
 /*$api = new \FloFilliate\Api(
     new \FloFilliate\Fingerprint(),
     new \FloFilliate\Network('native'),
-    "http://localhost/app_dev.php/api"
+    "http://localhost/app_dev.php/en/api"
 );*/
 
 $api = \FloFilliate\Api::create("http://localhost/app_dev.php/en/api");
@@ -26,7 +26,7 @@ if (\FloFilliate\Api::hasPromoCodeAndTrackId()) {
 
     // now we gonna get result
     try {
-        var_dump($api->push($trackId, "http://example.com/my-callback-url", array('orderId' => 33)));
+        var_dump($api->push($trackId, 50 /* minus 50% of points */, "http://example.com/my-callback-url", array('orderId' => 33)));
         var_dump($api->delete('9d12e035f87f97107431ffd09a90ee0c86caafe5', '17'));
     } catch (\Exception $e) {
         echo "Exception thrown: ", $e->getMessage(), "\n";

@@ -14,6 +14,7 @@ interface Version1Definition
     const TRACK_ID_KEY = "tsic";
     const UID_KEY = "uid";
     const CU_KEY = "cu";
+    const PDIFF_KEY = 'pd';
 
     const ADD_FLAGS = "f=1";
 

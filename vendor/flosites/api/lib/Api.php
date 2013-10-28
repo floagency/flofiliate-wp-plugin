@@ -84,12 +84,13 @@ class Api implements Version1Definition
 
     /**
      * @param string $trackId
+     * @param int $pDiff
      * @param bool $callbackUrl
      * @param array $additionalData
      * @return array
      * @throws \BadMethodCallException
      */
-    public function push($trackId, $callbackUrl = false, array $additionalData = null)
+    public function push($trackId, $pDiff = 0, $callbackUrl = false, array $additionalData = null)
     {
         if (!self::validateTrackId($trackId)) {
             throw new \BadMethodCallException("Invalid Track Id provided");
@@ -111,13 +112,15 @@ class Api implements Version1Definition
         $url = sprintf(
             "{$this->apiUrl}%s{$delimiter}" .
             self::UID_KEY . "=%s&" .
-            self::TRACK_ID_KEY . "=%s" .
+            self::TRACK_ID_KEY . "=%s&" .
+            self::PDIFF_KEY . "=%s" .
             "%s&" .
             self::ADD_FLAGS,
 
             self::PUSH_PART,
             $this->fingerprint,
             $trackId,
+            (int) $pDiff,
             $append
         );
 
