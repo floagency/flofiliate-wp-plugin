@@ -357,11 +357,11 @@ class FloFiliate
             }
 
             $api_key = isset($_POST['flofiliate_api_key']) ? $_POST['flofiliate_api_key'] : null;
-            if(!empty($api_key) && filter_var($api_key, FILTER_VALIDATE_URL)) {
+            if(!empty($api_key) && filter_var($api_key, FILTER_DEFAULT)) {
                 if(get_option( 'flofiliate_api_key' ) !== false) {
-                    update_option('flofiliate_api_key', $api_url);
+                    update_option('flofiliate_api_key', $api_key);
                 } else {
-                    add_option('flofiliate_api_key', $api_url);
+                    add_option('flofiliate_api_key', $api_key);
                 }
             }
         }
