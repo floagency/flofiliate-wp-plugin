@@ -16,6 +16,7 @@ interface Version1Definition
     const CU_KEY = "cu";
     const PDIFF_KEY = 'pd';
     const SUMM_KEY = 'sm';
+    const API_KEY_KEY = 'apk';
 
     const ADD_FLAGS = "f=1";
 

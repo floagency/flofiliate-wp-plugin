@@ -36,7 +36,7 @@ if (\FloFilliate\Api::hasPromoCodeAndTrackId()) {
 
     // now we gonna get result
     try {
-        var_dump($api->push($trackId, 50 /* minus 50% of points */, "http://example.com/my-callback-url", array('orderId' => 33)));
+        var_dump($api->push($trackId, 300 /* total $ user spent */, 50 /* minus 50% of points */, "http://example.com/my-callback-url", array('orderId' => 33)));
         var_dump($api->delete('9d12e035f87f97107431ffd09a90ee0c86caafe5', '17'));
     } catch (\Exception $e) {
         echo "Exception thrown: ", $e->getMessage(), "\n";

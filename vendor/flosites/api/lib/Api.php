@@ -30,6 +30,11 @@ class Api implements Version1Definition
     protected $decoder;
 
     /**
+     * @var string
+     */
+    protected $apiKey = "_";
+
+    /**
      * @param Fingerprint $fingerprint
      * @param Network $network
      * @param string $apiUrl
@@ -47,6 +52,22 @@ class Api implements Version1Definition
 
         $decoderClass = self::DECODER_CLASS;
         $this->decoder = new $decoderClass;
+    }
+
+    /**
+     * @param string $key
+     */
+    public function setApiKey($key)
+    {
+        $this->apiKey = $key;
+    }
+
+    /**
+     * @return string
+     */
+    public function getApiKey()
+    {
+        return $this->apiKey;
     }
 
     /**
@@ -120,6 +141,7 @@ class Api implements Version1Definition
             self::TRACK_ID_KEY . "=%s&" .
             self::PDIFF_KEY . "=%s" .
             self::SUMM_KEY . "=%s" .
+            self::API_KEY_KEY . "=%s" .
             "%s&" .
             self::ADD_FLAGS,
 
@@ -128,6 +150,7 @@ class Api implements Version1Definition
             $trackId,
             (int) $pDiff,
             (int) $total,
+            urlencode($this->apiKey),
             $append
         );
 

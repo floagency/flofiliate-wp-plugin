@@ -43,3 +43,13 @@ register_deactivation_hook( __FILE__, array( 'FloFiliate', 'deactivate' ) );
 
 // TODO: replace Plugin_Name with the name of the plugin defined in `class-plugin-name.php`
 add_action( 'plugins_loaded', array( 'FloFiliate', 'get_instance' ) );
+
+function flofiliate_api_key_notice(){
+	if(is_admin()){
+		echo '<div class="error"><p>Enter please the <a href="'.site_url( '/wp-admin/options-general.php?page=FloFiliate' ).'">API Key</a> for Flofilliate.</p></div>';	
+	}	
+}
+
+if( !strlen(get_option( 'flofiliate_api_key' ) ) ){
+    add_action( 'admin_notices', 'flofiliate_api_key_notice' ); 
+}

@@ -39,8 +39,12 @@
             <input type="hidden" name="__flofiliate_submit" value="1"/>
 
             <fieldset>
-                <label> Api Url:
+                <label> Api Url: 
                     <input type="text" name="flofiliate_api_url" value="<?php echo get_option('flofiliate_api_url'); ?>"/>
+                </label>
+                <br/>
+                <label> Api Key:
+                    <input type="text" name="flofiliate_api_key" value="<?php echo get_option('flofiliate_api_key'); ?>"/>
                 </label>
 
                 <br/><br/><br/>

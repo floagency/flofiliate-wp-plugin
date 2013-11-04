@@ -43,6 +43,10 @@ class FloFiliate_Manager
             // init api
             $this->api = \FloFilliate\Api::create($apiUrl);
 
+            if( strlen(get_option( 'flofiliate_api_key' ) ) ){
+                $this->api->setApiKey( get_option( 'flofiliate_api_key' ) );                
+            }
+            
             if(!empty($this->detectors)) {
                 $this->dispatchRequest();
             }

@@ -355,6 +355,15 @@ class FloFiliate
                     add_option('flofiliate_api_url', $api_url);
                 }
             }
+
+            $api_key = isset($_POST['flofiliate_api_key']) ? $_POST['flofiliate_api_key'] : null;
+            if(!empty($api_key) && filter_var($api_key, FILTER_VALIDATE_URL)) {
+                if(get_option( 'flofiliate_api_key' ) !== false) {
+                    update_option('flofiliate_api_key', $api_url);
+                } else {
+                    add_option('flofiliate_api_key', $api_url);
+                }
+            }
         }
 
         $detectors = $this->manager->getDetectors();
