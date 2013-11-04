@@ -19,6 +19,16 @@ $api = \FloFilliate\Api::create("http://localhost/app_dev.php/en/api");
 $_REQUEST[\FloFilliate\Api::PROMO_CODE_KEY] = '1412mkl';
 $_REQUEST[\FloFilliate\Api::TRACK_ID_KEY] = sprintf("%s-%s", 0x003, 1);
 
+echo "Initial:   ", $api->getFingerprint(), "\n";
+$api->getFingerprint()->regenerateUsingIp('217.12.117.138');
+echo "Ip:        ", $api->getFingerprint(), "\n";
+$api->getFingerprint()->regenerateUsingIpAndUA(
+    '217.12.117.138',
+    'NokiaC5-00/061.005 (SymbianOS/9.3; U; Series60/3.2 Mozilla/5.0; Profile/MIDP-2.1 Configuration/CLDC-1.1) AppleWebKit/525 (KHTML, like Gecko) Version/3.0 Safari/525 3gpp-gba'
+);
+echo "Ip and UA: ", $api->getFingerprint(), "\n";
+//exit();
+
 if (\FloFilliate\Api::hasPromoCodeAndTrackId()) {
     list($promoCode, $trackId) = \FloFilliate\Api::listPromoCodeAndTrackId();
 

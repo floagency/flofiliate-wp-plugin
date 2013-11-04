@@ -109,6 +109,9 @@ class FloFiliate_Cart66Detector extends FloFiliate_IDetector
                         // check if the User IP is available in the transient
                         if ( false !== ( $flo_affiliate_user_ip = get_transient( 'flo_affiliate_user_ip'.$order->id ) ) ) {
                             $this->manager->getApi()->getFingerprint()->regenerateUsingIp($flo_affiliate_user_ip);
+                                // public function regenerateUsingIpAndUA($ip, $ua)
+                                /* UA- user agent
+                                   $_SERVER['HTTP_USER_AGENT'] */
 
                         }
                         

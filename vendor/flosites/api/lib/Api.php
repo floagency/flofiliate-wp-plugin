@@ -83,14 +83,19 @@ class Api implements Version1Definition
     }
 
     /**
-     * @param string $trackId
-     * @param int $pDiff
-     * @param bool $callbackUrl
-     * @param array $additionalData
+     * @param string $trackId           Track id received
+     * @param int $total                Total amount of money of products the user bought
+     * @param int $pDiff                Points difference percentage (-n% from the points set)
+     * @param bool $callbackUrl         Callback to be called after data persisted into the system
+     * @param array $additionalData     Additional query data to be returned to the callback url
      * @return array
      * @throws \BadMethodCallException
+     *
+     * Note: Total has priority to the pdiff parameter.
+     *          So the % from the total is set for promo code
+     *          instead of setting fixed amount of points assigned(- pdiff if set)
      */
-    public function push($trackId, $pDiff = 0, $callbackUrl = false, array $additionalData = null)
+    public function push($trackId, $total = -1, $pDiff = 0, $callbackUrl = false, array $additionalData = null)
     {
         if (!self::validateTrackId($trackId)) {
             throw new \BadMethodCallException("Invalid Track Id provided");
@@ -114,6 +119,7 @@ class Api implements Version1Definition
             self::UID_KEY . "=%s&" .
             self::TRACK_ID_KEY . "=%s&" .
             self::PDIFF_KEY . "=%s" .
+            self::SUMM_KEY . "=%s" .
             "%s&" .
             self::ADD_FLAGS,
 
@@ -121,6 +127,7 @@ class Api implements Version1Definition
             $this->fingerprint,
             $trackId,
             (int) $pDiff,
+            (int) $total,
             $append
         );
 

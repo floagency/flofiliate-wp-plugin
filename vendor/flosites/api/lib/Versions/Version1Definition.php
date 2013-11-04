@@ -15,6 +15,7 @@ interface Version1Definition
     const UID_KEY = "uid";
     const CU_KEY = "cu";
     const PDIFF_KEY = 'pd';
+    const SUMM_KEY = 'sm';
 
     const ADD_FLAGS = "f=1";
 

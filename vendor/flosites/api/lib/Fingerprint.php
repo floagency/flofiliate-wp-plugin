@@ -62,13 +62,65 @@ class Fingerprint
     }
 
     /**
+     * @param string $ua
+     * @throws \InvalidArgumentException
+     */
+    public function regenerateUsingUA($ua)
+    {
+        $tmpUA = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : null;
+        $_SERVER['HTTP_USER_AGENT'] = $ua;
+
+        $this->dumpBrowserCapabilities();
+        $this->dumpFingerprint();
+
+        $_SERVER['HTTP_USER_AGENT'] = $tmpUA;
+
+        if(empty($_SERVER['HTTP_USER_AGENT'])) {
+            unset($_SERVER['HTTP_USER_AGENT']);
+        }
+    }
+
+    /**
+     * @param string $ip
+     * @param string $ua
+     * @throws \InvalidArgumentException
+     */
+    public function regenerateUsingIpAndUA($ip, $ua)
+    {
+        if(!filter_var($ip, FILTER_VALIDATE_IP)) {
+            throw new \InvalidArgumentException("An valid ip should be provided");
+        }
+
+        $tmpIp = isset($_SERVER['HTTP_CLIENT_IP']) ? $_SERVER['HTTP_CLIENT_IP'] : null;
+        $_SERVER['HTTP_CLIENT_IP'] = $ip;
+
+        $tmpUA = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : null;
+        $_SERVER['HTTP_USER_AGENT'] = $ua;
+
+        $this->dumpBrowserCapabilities();
+        $this->dumpFingerprint();
+
+        $_SERVER['HTTP_CLIENT_IP'] = $tmpIp;
+
+        $_SERVER['HTTP_USER_AGENT'] = $tmpUA;
+
+        if(empty($_SERVER['HTTP_CLIENT_IP'])) {
+            unset($_SERVER['HTTP_CLIENT_IP']);
+        }
+
+        if(empty($_SERVER['HTTP_USER_AGENT'])) {
+            unset($_SERVER['HTTP_USER_AGENT']);
+        }
+    }
+
+    /**
      * @return void
      */
     protected function dumpFingerprint()
     {
         $uniques = array(
             $this->capabilities['browser_name'],
-            'nan|nan|nan|nan',
+            serialize($_SERVER), //'nan|nan|nan|nan',
             array(
                 "RenderingEngine_Name.{$this->capabilities['RenderingEngine_Name']}"
             ),
