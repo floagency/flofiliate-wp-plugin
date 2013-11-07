@@ -298,7 +298,42 @@ class FloFiliate
 	 * @since    1.0.0
 	 */
 	public function enqueue_scripts() {
-		wp_enqueue_script( $this->plugin_slug . '-plugin-script', plugins_url( 'js/public.js', __FILE__ ), array( 'jquery' ), self::VERSION );
+		
+
+		$apiUrl = get_option('flofiliate_api_url'); // get the api url from plugin's option
+		if(!empty($apiUrl)) {
+			$parsed_url = parse_url($apiUrl);
+			
+			if(isset($parsed_url['scheme']) &&  $parsed_url['host']){
+				// retreive the host url of the api server
+				$api_base_url = $parsed_url['scheme'].'://'.$parsed_url['host'];	
+			}
+			
+
+			if(isset($api_base_url)){
+
+				wp_enqueue_script( 'flo_affiliate', $api_base_url.'/js/fcaba2e.js', array(), '1',false );
+				wp_enqueue_script( $this->plugin_slug . '-plugin-script', plugins_url( 'js/public.js', __FILE__ ), array( 'jquery','flo_affiliate' ), self::VERSION,true );
+
+				
+		        
+				$api_push_url = $apiUrl.'/push';
+
+				wp_localize_script( $this->plugin_slug . '-plugin-script', 'api_push_url', $api_push_url );
+
+				if(isset($_GET['litsic']) && strlen($_GET['litsic'])){
+					wp_localize_script( $this->plugin_slug . '-plugin-script', 'litsic', $_GET['litsic'] );
+				}else{
+					wp_localize_script( $this->plugin_slug . '-plugin-script', 'litsic', '' );
+				}	
+			}
+			
+		}else{
+			wp_enqueue_script( $this->plugin_slug . '-plugin-script', plugins_url( 'js/public.js', __FILE__ ), array( 'jquery' ), self::VERSION );
+			wp_localize_script( $this->plugin_slug . '-plugin-script', 'litsic', '' );
+		}
+
+		
 	}
 
 	/**
