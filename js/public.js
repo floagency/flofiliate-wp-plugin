@@ -2,7 +2,6 @@
 	"use strict";
 	$(function () {
 		// Place your public-facing JavaScript here
-	console.log(typeof(window.__floff_tracker) );
 	
 		if( litsic.length && typeof(window.__floff_tracker) != 'undefined'){
 
